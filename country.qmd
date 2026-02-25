@@ -34,3 +34,5 @@ ax.set_xlabel("Year")
 ax.set_ylabel("Population (millions)")
 ax.set_title(f"{country_name}: Population Over Time")
 plt.show()
+```
+
