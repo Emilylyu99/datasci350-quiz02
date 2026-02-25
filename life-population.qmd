@@ -1,0 +1,34 @@
+---
+title: "Life Expectancy and Population"
+---
+
+## Introduction
+
+This graph examines the relationship between population size and life expectancy across countries in 2007. Each point represents a country, and colors indicate continents. Population is shown on a logarithmic scale to account for large differences between countries.
+
+```{python}
+#| echo: true
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("gapminder.csv")
+
+# Use latest year to avoid repeated country points across time
+latest_year = df["year"].max()
+latest = df[df["year"] == latest_year].copy()
+
+fig, ax = plt.subplots()
+for cont, sub in latest.groupby("continent"):
+    ax.scatter(sub["population_millions"], sub["life_expectancy"], label=cont, alpha=0.7)
+
+ax.set_xscale("log")
+ax.set_xlabel("Population (millions, log scale)")
+ax.set_ylabel("Life expectancy")
+ax.set_title(f"Life Expectancy vs Population by Continent ({latest_year})")
+ax.legend()
+plt.show()
+```
+
+## Interpretation
+
+Unlike GDP per capita, population size does not show a strong relationship with life expectancy. Both small and large countries can have high or low life expectancy. This suggests that population size alone is not a key determinant of health outcomes. Instead, economic development and other institutional factors likely play a more important role.

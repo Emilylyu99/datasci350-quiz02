@@ -1,0 +1,79 @@
+[
+  {
+    "objectID": "create-dataset.html",
+    "href": "create-dataset.html",
+    "title": "Create the Gapminder dataset",
+    "section": "",
+    "text": "# Import necessary libraries\nimport pandas as pd\nfrom gapminder import gapminder\n\n# Rename 'lifeExp' to 'life_expectancy' and 'gdpPercap' to 'gdp_per_capita'\ngapminder = gapminder.rename(columns={'lifeExp': 'life_expectancy',\n                                      'pop': 'population_millions', \n                                      'gdpPercap': 'gdp_per_capita'})\n\n# Convert population to millions\ngapminder['population_millions'] = gapminder['population_millions'] / 1_000_000\n\n# Create a new pandas DataFrame from the modified gapminder data\ngapminder_df = pd.DataFrame(gapminder)\n\n# Save the DataFrame as a CSV file\ngapminder_df.to_csv('gapminder.csv', index=False)\n\n# Print the first 3 rows of the DataFrame\nprint(gapminder_df.head(3))\n\n       country continent  year  life_expectancy  population_millions  \\\n0  Afghanistan      Asia  1952           28.801             8.425333   \n1  Afghanistan      Asia  1957           30.332             9.240934   \n2  Afghanistan      Asia  1962           31.997            10.267083   \n\n   gdp_per_capita  \n0      779.445314  \n1      820.853030  \n2      853.100710"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "life-gdp.html",
+    "href": "life-gdp.html",
+    "title": "Life Expectancy and GDP per Capita",
+    "section": "",
+    "text": "This graph shows the relationship between GDP per capita and life expectancy for 142 countries from 1952 to 2007. Each point represents a country-year observation, and colors indicate continents. The x-axis is displayed on a logarithmic scale to better visualize income differences across countries.\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"gapminder.csv\")\n\n# A simple global view: scatter of all country-year points, colored by continent\nfig, ax = plt.subplots()\nfor cont, sub in df.groupby(\"continent\"):\n    ax.scatter(sub[\"gdp_per_capita\"], sub[\"life_expectancy\"], label=cont, alpha=0.6)\n\nax.set_xscale(\"log\")\nax.set_xlabel(\"GDP per capita (log scale)\")\nax.set_ylabel(\"Life expectancy\")\nax.set_title(\"Life Expectancy vs GDP per Capita (All Countries, 1952–2007)\")\nax.legend()\nplt.show()"
+  },
+  {
+    "objectID": "life-gdp.html#brief-introduction",
+    "href": "life-gdp.html#brief-introduction",
+    "title": "Life Expectancy and GDP per Capita",
+    "section": "",
+    "text": "This graph shows the relationship between GDP per capita and life expectancy for 142 countries from 1952 to 2007. Each point represents a country-year observation, and colors indicate continents. The x-axis is displayed on a logarithmic scale to better visualize income differences across countries.\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"gapminder.csv\")\n\n# A simple global view: scatter of all country-year points, colored by continent\nfig, ax = plt.subplots()\nfor cont, sub in df.groupby(\"continent\"):\n    ax.scatter(sub[\"gdp_per_capita\"], sub[\"life_expectancy\"], label=cont, alpha=0.6)\n\nax.set_xscale(\"log\")\nax.set_xlabel(\"GDP per capita (log scale)\")\nax.set_ylabel(\"Life expectancy\")\nax.set_title(\"Life Expectancy vs GDP per Capita (All Countries, 1952–2007)\")\nax.legend()\nplt.show()"
+  },
+  {
+    "objectID": "life-gdp.html#interpretation",
+    "href": "life-gdp.html#interpretation",
+    "title": "Life Expectancy and GDP per Capita",
+    "section": "Interpretation",
+    "text": "Interpretation\nThere is a strong positive relationship between GDP per capita and life expectancy. Countries with higher income levels generally have longer life expectancy. However, the increase in life expectancy slows at higher income levels, suggesting diminishing returns to income. Clear continental patterns are also visible, with Europe and Oceania clustered at higher income and life expectancy levels, while many African countries remain at lower levels."
+  },
+  {
+    "objectID": "country.html",
+    "href": "country.html",
+    "title": "Country Analysis",
+    "section": "",
+    "text": "This page tracks changes in life expectancy, GDP per capita, and population over time for one country.\n#| echo: true import pandas as pd import matplotlib.pyplot as plt\ndf = pd.read_csv(“gapminder.csv”)\ncountry_name = “China” c = df[df[“country”] == country_name].sort_values(“year”)\nfig, ax = plt.subplots() ax.plot(c[“year”], c[“life_expectancy”], marker=“o”) ax.set_xlabel(“Year”) ax.set_ylabel(“Life expectancy”) ax.set_title(f”{country_name}: Life Expectancy Over Time”) plt.show()\nfig, ax = plt.subplots() ax.plot(c[“year”], c[“gdp_per_capita”], marker=“o”) ax.set_xlabel(“Year”) ax.set_ylabel(“GDP per capita”) ax.set_title(f”{country_name}: GDP per Capita Over Time”) plt.show()\nfig, ax = plt.subplots() ax.plot(c[“year”], c[“population_millions”], marker=“o”) ax.set_xlabel(“Year”) ax.set_ylabel(“Population (millions)”) ax.set_title(f”{country_name}: Population Over Time”) plt.show()"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Gapminder: Life, Wealth, and Population",
+    "section": "",
+    "text": "Gapminder is a dataset tracking life expectancy, population, and GDP per capita for 142 countries from 1952 to 2007 (every 5 years)."
+  },
+  {
+    "objectID": "index.html#pages",
+    "href": "index.html#pages",
+    "title": "Gapminder: Life, Wealth, and Population",
+    "section": "Pages",
+    "text": "Pages\n\nLife Expectancy and GDP per Capita\nLife Expectancy and Population\nCountry Analysis"
+  },
+  {
+    "objectID": "life-population.html",
+    "href": "life-population.html",
+    "title": "Life Expectancy and Population",
+    "section": "",
+    "text": "This graph examines the relationship between population size and life expectancy across countries in 2007. Each point represents a country, and colors indicate continents. Population is shown on a logarithmic scale to account for large differences between countries.\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"gapminder.csv\")\n\n# Use latest year to avoid repeated country points across time\nlatest_year = df[\"year\"].max()\nlatest = df[df[\"year\"] == latest_year].copy()\n\nfig, ax = plt.subplots()\nfor cont, sub in latest.groupby(\"continent\"):\n    ax.scatter(sub[\"population_millions\"], sub[\"life_expectancy\"], label=cont, alpha=0.7)\n\nax.set_xscale(\"log\")\nax.set_xlabel(\"Population (millions, log scale)\")\nax.set_ylabel(\"Life expectancy\")\nax.set_title(f\"Life Expectancy vs Population by Continent ({latest_year})\")\nax.legend()\nplt.show()"
+  },
+  {
+    "objectID": "life-population.html#introduction",
+    "href": "life-population.html#introduction",
+    "title": "Life Expectancy and Population",
+    "section": "",
+    "text": "This graph examines the relationship between population size and life expectancy across countries in 2007. Each point represents a country, and colors indicate continents. Population is shown on a logarithmic scale to account for large differences between countries.\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\ndf = pd.read_csv(\"gapminder.csv\")\n\n# Use latest year to avoid repeated country points across time\nlatest_year = df[\"year\"].max()\nlatest = df[df[\"year\"] == latest_year].copy()\n\nfig, ax = plt.subplots()\nfor cont, sub in latest.groupby(\"continent\"):\n    ax.scatter(sub[\"population_millions\"], sub[\"life_expectancy\"], label=cont, alpha=0.7)\n\nax.set_xscale(\"log\")\nax.set_xlabel(\"Population (millions, log scale)\")\nax.set_ylabel(\"Life expectancy\")\nax.set_title(f\"Life Expectancy vs Population by Continent ({latest_year})\")\nax.legend()\nplt.show()"
+  },
+  {
+    "objectID": "life-population.html#interpretation",
+    "href": "life-population.html#interpretation",
+    "title": "Life Expectancy and Population",
+    "section": "Interpretation",
+    "text": "Interpretation\nUnlike GDP per capita, population size does not show a strong relationship with life expectancy. Both small and large countries can have high or low life expectancy. This suggests that population size alone is not a key determinant of health outcomes. Instead, economic development and other institutional factors likely play a more important role."
+  }
+]
